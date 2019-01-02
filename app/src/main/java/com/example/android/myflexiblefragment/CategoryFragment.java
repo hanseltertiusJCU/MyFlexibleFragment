@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +41,22 @@ public class CategoryFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.btn_detail_category){
+            DetailCategoryFragment mDetailCategoryFragment = new DetailCategoryFragment();
 
+            Bundle mBundle = new Bundle();
+            mBundle.putString(DetailCategoryFragment.EXTRA_NAME, "Lifestyle");
+            String description = "Kategori ini berasal dari produk-produk lifestyle";
+
+            mDetailCategoryFragment.setArguments(mBundle);
+            mDetailCategoryFragment.setDescription(description);
+
+            FragmentManager mFragmentManager = getFragmentManager();
+            if(mFragmentManager != null){
+                FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+                mFragmentTransaction.replace(R.id.frame_container, mDetailCategoryFragment, DetailCategoryFragment.class.getSimpleName());
+                mFragmentTransaction.addToBackStack(null);
+                mFragmentTransaction.commit();
+            }
         }
     }
 }
